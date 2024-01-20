@@ -14,7 +14,7 @@ WORKDIR /src
 #RUN poetry config virtualenvs.in-project true
 #RUN if [ -f pyproject.toml ]; then poetry install --no-root; fi
 
-RUN pip install fastapi uvicorn sqlalchemy aiomysql 
+RUN pip install fastapi uvicorn sqlalchemy aiomysql gunicorn
 
 # uvicornのサーバーを立ち上げる
 ENTRYPOINT ["uvicorn", "main:app", "--host", "0.0.0.0", "--reload"]
