@@ -1,0 +1,34 @@
+version: '3'
+services:
+  api:
+    build: api/
+    volumes: 
+      - .dockervenv:/src/.venv
+      - ./api:/src
+    ports:
+      - 8000:8000
+    networks:
+      - net_test
+  app:
+    build: app/
+    volumes:
+      - ./app:/src
+    ports:
+      - 8501:8501
+    networks:
+      - net_test
+  db:
+    image: mysql:8.0
+    platform: linux/x86_64
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_DATABASE: 'demo'
+      TZ: 'Asia/Tokyo'
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - 3306:3306
+    networks:
+      - net_test
+networks:
+  net_test:
+    external: true
